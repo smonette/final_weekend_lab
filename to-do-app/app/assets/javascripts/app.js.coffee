@@ -14,30 +14,31 @@ TaskApp.config ["$routeProvider", "$locationProvider", ($routeProvider, $locatio
 ]
 
 
-# Books Controller
+# tasks Controller
 TaskApp.controller "TasksCtrl", ["$scope", "$http", ($scope, $http) ->
   $scope.tasks = []
 
   $scope.addTask = ->
     $http.post("/tasks.json", $scope.newTask).success (data) ->
-      # make new book object empty
+      # make new task object empty
       $scope.newTask = {}
-      # add this book to the books array
+      # add this task to the tasks array
       $scope.tasks.push(data)
 
   $scope.getTasks = ->
     $http.get("/tasks.json").success (data) ->
       $scope.tasks = data
 
-  $scope.deleteTask = (book) ->
-    conf = confirm "Are you sure?"
+  $scope.deleteTask = (task) ->
+    conf = confirm "Did you really finish it?"
     if conf
-      $http.delete("/tasks/#{book.id}.json").success (data) ->
+      $http.delete("/tasks/#{task.id}.json").success (data) ->
         $scope.tasks.splice($scope.tasks.indexOf(task), 1)
 
-  $scope.updateTask = (book) ->
-    this.checked = false
+  $scope.updateTask = (task) ->
+    this.clickedEdit = false
     $http.put("/tasks/#{this.task.id}.json", task).success (data) ->
+
 
 
 

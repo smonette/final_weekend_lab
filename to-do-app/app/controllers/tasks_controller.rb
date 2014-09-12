@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_book, only: [:show, :update, :destroy]
+  before_action :set_task, only: [:show, :update, :destroy]
   # create a before_action that just returns the template
   #   without the layout
   before_action :render_main_layout_if_format_html
@@ -34,7 +34,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task.permit(:title))
+    params.require(:task).permit(:title)
   end
 
   def render_main_layout_if_format_html

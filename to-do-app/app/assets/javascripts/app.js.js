@@ -29,17 +29,17 @@ TaskApp.controller("TasksCtrl", [
         return $scope.tasks = data;
       });
     };
-    $scope.deleteTask = function(book) {
+    $scope.deleteTask = function(task) {
       var conf;
-      conf = confirm("Are you sure?");
+      conf = confirm("Did you really finish it?");
       if (conf) {
-        return $http["delete"]("/tasks/" + book.id + ".json").success(function(data) {
+        return $http["delete"]("/tasks/" + task.id + ".json").success(function(data) {
           return $scope.tasks.splice($scope.tasks.indexOf(task), 1);
         });
       }
     };
-    $scope.updateTask = function(book) {
-      this.checked = false;
+    $scope.updateTask = function(task) {
+      this.clickedEdit = false;
       return $http.put("/tasks/" + this.task.id + ".json", task).success(function(data) {});
     };
     return $scope.getTasks();
