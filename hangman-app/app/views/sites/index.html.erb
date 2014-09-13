@@ -12,24 +12,43 @@
                         100 320,
                         150"
       style="fill:none;stroke:black;stroke-width:10" />
+      <circle cx="320" cy="175" r="30" fill="white" stroke="black" style="stroke-width:2;" id="man1"></circle>
+      <line x1="320" y1="205" x2="320" y2="350" style="stroke:rgb(0,0,0);stroke-width:4" id="man2" />
+      <line x1="320" y1="225" x2="270" y2="255" style="stroke:rgb(0,0,0);stroke-width:2" id="man3" />
+      <line x1="320" y1="225" x2="370" y2="265" style="stroke:rgb(0,0,0);stroke-width:2" id="man4" />
+      <line x1="320" y1="350" x2="370" y2="400" style="stroke:rgb(0,0,0);stroke-width:2" id="man5" />
+      <line x1="320" y1="350" x2="270" y2="400" style="stroke:rgb(0,0,0);stroke-width:2" id="man6" />
     </svg>
+
+
 
   </div>
    <div class="col-sm-6">
 
     <div ng-controller="HangmanCtrl">
+      <div ng-show="!clickedShow">
+      <h3>Enter a word</h3>
       <form ng-submit="handleSubmit(word)" role="form">
           <div class="form-group">
               <input class="form-control" ng-model="word" placeholder="Enter a word">
           </div>
 
-          <button type="submit" class="btn btn-default">Save</button>
+          <button type="submit" class="btn btn-default" ng-click ="clickedShow = !clickedShow">Save</button>
       </form>
+    </div>
 
-      <h3>Take a guess!</h3>
-      <div ng-repeat="letter in letters">
-        <button class="btn btn-default letter-button" id="letter{{}}">{{letter}}</button>
+      <div ng-show="clickedShow">
+        <h3>Take a guess!</h3>
+        <div ng-repeat="letter in letters">
+          <button class="btn btn-default letter-button">{{letter}}</button>
+        </div>
+
+        <div ng-repeat="blank in blanks">
+          <span class="blank">{{blank}}</span>
+        </div>
+
       </div>
+
 
     </div>
 
