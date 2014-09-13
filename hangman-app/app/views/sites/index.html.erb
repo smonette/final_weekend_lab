@@ -39,13 +39,14 @@
 
       <div ng-show="clickedShow">
         <h3>Take a guess!</h3>
-        <div ng-repeat="letter in letters">
-          <button class="btn btn-default letter-button">{{letter}}</button>
+        <div ng-repeat="letter in letters | filter:{picked:false}">
+          <button class="btn btn-default letter-button" ng-click ="letter.picked = true">{{letter.value}}</button>
         </div>
 
         <div ng-repeat="blank in blanks">
           <span class="blank">{{blank}}</span>
         </div>
+        <p>{{word}}</p>
 
       </div>
 
