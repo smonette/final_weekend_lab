@@ -86,37 +86,47 @@ HangmanApp.controller("HangmanCtrl", [
         picked: false
       }
     ];
+    $scope.counter = 0;
     $scope.handleSubmit = function() {
-      var letter, _i, _len, _ref, _results;
+      var letter, _i, _len, _ref;
       $scope.blanks = [];
       $scope.secretWord = $scope.word.split('');
       _ref = $scope.secretWord;
-      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         letter = _ref[_i];
-        _results.push($scope.blanks.push({
+        $scope.blanks.push({
           value: letter,
           placeholder: "_",
           guessed: false
-        }));
+        });
       }
-      return _results;
+      return $scope.hangman = [true];
     };
     return $scope.clickLetter = function(guessedLetter) {
-      var char, _i, _len, _ref, _results;
-      guessedLetter.picked = true;
-      _ref = $scope.blanks;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        char = _ref[_i];
-        if (guessedLetter.value === char.value) {
-          console.log(guessedLetter);
-          _results.push(console.log(char));
-        } else {
-          _results.push(void 0);
+      $scope.search = function(letter) {
+        var char, _i, _len, _ref;
+        _ref = $scope.blanks;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          char = _ref[_i];
+          if (letter.value === char.value) {
+            char.guessed = true;
+            return true;
+          }
+        }
+      };
+      if ($scope.search(guessedLetter) === true) {
+        console.log("RIGHT");
+      } else {
+        $scope.counter = $scope.counter + 1;
+        if ($scope.counter === 6) {
+          $scope.hangman.push(true);
+          $scope.loser = true;
+        } else if ($scope.counter < 6) {
+          console.log("WRONG!");
+          $scope.hangman.push(true);
         }
       }
-      return _results;
+      return guessedLetter.picked = true;
     };
   }
 ]);

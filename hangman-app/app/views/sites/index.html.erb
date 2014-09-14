@@ -1,5 +1,6 @@
 <h1>Hangman</h1>
 
+<div ng-controller="HangmanCtrl">
 <div class="row">
   <div class="col-sm-6">
 
@@ -12,12 +13,12 @@
                         100 320,
                         150"
       style="fill:none;stroke:black;stroke-width:10" />
-      <circle cx="320" cy="175" r="30" fill="white" stroke="black" style="stroke-width:2;" id="man1"></circle>
-      <line x1="320" y1="205" x2="320" y2="350" style="stroke:rgb(0,0,0);stroke-width:4" id="man2" />
-      <line x1="320" y1="225" x2="270" y2="255" style="stroke:rgb(0,0,0);stroke-width:2" id="man3" />
-      <line x1="320" y1="225" x2="370" y2="265" style="stroke:rgb(0,0,0);stroke-width:2" id="man4" />
-      <line x1="320" y1="350" x2="370" y2="400" style="stroke:rgb(0,0,0);stroke-width:2" id="man5" />
-      <line x1="320" y1="350" x2="270" y2="400" style="stroke:rgb(0,0,0);stroke-width:2" id="man6" />
+      <circle ng-show="hangman[1]" cx="320" cy="175" r="30" fill="white" stroke="black" style="stroke-width:2;"></circle>
+      <line ng-show="hangman[2]" x1="320" y1="205" x2="320" y2="350" style="stroke:rgb(0,0,0);stroke-width:4" />
+      <line ng-show="hangman[3]" x1="320" y1="225" x2="270" y2="255" style="stroke:rgb(0,0,0);stroke-width:2" />
+      <line ng-show="hangman[4]" x1="320" y1="225" x2="370" y2="265" style="stroke:rgb(0,0,0);stroke-width:2" />
+      <line ng-show="hangman[5]" x1="320" y1="350" x2="370" y2="400" style="stroke:rgb(0,0,0);stroke-width:2" />
+      <line ng-show="hangman[6]" x1="320" y1="350" x2="270" y2="400" style="stroke:rgb(0,0,0);stroke-width:2" />
     </svg>
 
 
@@ -25,7 +26,6 @@
   </div>
    <div class="col-sm-6">
 
-    <div ng-controller="HangmanCtrl">
       <div ng-show="!clickedShow">
       <h3>Enter a word</h3>
       <form ng-submit="handleSubmit()" role="form">
@@ -44,12 +44,16 @@
         </div>
         <div class="divide"></div>
         <div ng-repeat="blank in blanks track by $index" class="blank">
-           <div ng-show="blank.guessed = false">
-            {{blank.placeholder}}
-          </div>
-          <div ng-hide="blank.guessed = false">
-            {{blank.value}}
-          </div>
+          <div class="animate-switch-container"
+              ng-switch on="blank.guessed">
+                <div class="animate-switch" ng-switch-when="true">{{blank.value}}</div>
+                <div class="animate-switch" ng-switch-when="false">{{blank.placeholder}}</div>
+            </div>
+
+        </div>
+        <div ng-show="loser">
+          <h2>GAME OVER!!!</h2>
+          <p>The word was "{{word}}"!</p>
         </div>
 
       </div>

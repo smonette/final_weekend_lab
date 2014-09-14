@@ -1,6 +1,7 @@
 HangmanApp = angular.module "HangmanApp", []
 
 HangmanApp.controller "HangmanCtrl", ["$scope", ($scope) ->
+
   $scope.letters = [
       {value:"a", picked:false },
       {value:"b",picked:false },
@@ -30,7 +31,7 @@ HangmanApp.controller "HangmanCtrl", ["$scope", ($scope) ->
       {value: "z",picked:false }
   ]
 
-
+  $scope.counter = 0
 
 
 
@@ -41,15 +42,29 @@ HangmanApp.controller "HangmanCtrl", ["$scope", ($scope) ->
     for letter in $scope.secretWord
       $scope.blanks.push({value: letter, placeholder:"_", guessed:false})
 
+    $scope.hangman = [true]
+
 
   $scope.clickLetter = (guessedLetter) ->
+
+    $scope.search = (letter) ->
+      for char in $scope.blanks
+        if (letter.value == char.value)
+          char.guessed = true
+          return true;
+
+    if $scope.search(guessedLetter) == true
+      console.log("RIGHT")
+    else
+      $scope.counter = $scope.counter + 1
+      if $scope.counter == 6
+        $scope.hangman.push(true);
+        $scope.loser = true;
+      else if $scope.counter < 6
+        console.log("WRONG!")
+        $scope.hangman.push(true);
+
     guessedLetter.picked = true
-
-    for char in $scope.blanks
-      if (guessedLetter.value == char.value)
-        console.log(guessedLetter)
-        console.log(char)
-
 
 ]
 
