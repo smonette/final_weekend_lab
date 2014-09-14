@@ -4,10 +4,7 @@ var HangmanApp;
 HangmanApp = angular.module("HangmanApp", []);
 
 HangmanApp.controller("HangmanCtrl", [
-  "$scope", "$http", function($scope, $http) {
-    var letter, _i, _len, _ref, _results;
-    $scope.word = '';
-    $scope.secretWord = $scope.word.split('');
+  "$scope", function($scope) {
     $scope.letters = [
       {
         value: "a",
@@ -89,14 +86,38 @@ HangmanApp.controller("HangmanCtrl", [
         picked: false
       }
     ];
-    $scope.blank = [];
-    _ref = $scope.word;
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      letter = _ref[_i];
-      _results.push($scope.blank.push("_"));
-    }
-    return _results;
+    $scope.handleSubmit = function() {
+      var letter, _i, _len, _ref, _results;
+      $scope.blanks = [];
+      $scope.secretWord = $scope.word.split('');
+      _ref = $scope.secretWord;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        letter = _ref[_i];
+        _results.push($scope.blanks.push({
+          value: letter,
+          placeholder: "_",
+          guessed: false
+        }));
+      }
+      return _results;
+    };
+    return $scope.clickLetter = function(guessedLetter) {
+      var char, _i, _len, _ref, _results;
+      guessedLetter.picked = true;
+      _ref = $scope.blanks;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        char = _ref[_i];
+        if (guessedLetter.value === char.value) {
+          console.log(guessedLetter);
+          _results.push(console.log(char));
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    };
   }
 ]);
 

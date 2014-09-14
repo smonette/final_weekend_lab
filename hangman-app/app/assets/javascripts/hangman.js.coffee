@@ -1,8 +1,6 @@
 HangmanApp = angular.module "HangmanApp", []
 
-HangmanApp.controller "HangmanCtrl", ["$scope", "$http", ($scope, $http) ->
-  $scope.word = ''
-  $scope.secretWord = $scope.word.split('')
+HangmanApp.controller "HangmanCtrl", ["$scope", ($scope) ->
   $scope.letters = [
       {value:"a", picked:false },
       {value:"b",picked:false },
@@ -33,10 +31,25 @@ HangmanApp.controller "HangmanCtrl", ["$scope", "$http", ($scope, $http) ->
   ]
 
 
-  $scope.blank = []
 
-  for letter in $scope.word
-    $scope.blank.push("_")
+
+
+  $scope.handleSubmit = ->
+    $scope.blanks = []
+    $scope.secretWord = $scope.word.split('')
+
+    for letter in $scope.secretWord
+      $scope.blanks.push({value: letter, placeholder:"_", guessed:false})
+
+
+  $scope.clickLetter = (guessedLetter) ->
+    guessedLetter.picked = true
+
+    for char in $scope.blanks
+      if (guessedLetter.value == char.value)
+        console.log(guessedLetter)
+        console.log(char)
+
 
 ]
 

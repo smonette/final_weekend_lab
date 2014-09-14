@@ -28,7 +28,7 @@
     <div ng-controller="HangmanCtrl">
       <div ng-show="!clickedShow">
       <h3>Enter a word</h3>
-      <form ng-submit="handleSubmit(word)" role="form">
+      <form ng-submit="handleSubmit()" role="form">
           <div class="form-group">
               <input class="form-control" ng-model="word" placeholder="Enter a word">
           </div>
@@ -39,17 +39,20 @@
 
       <div ng-show="clickedShow">
         <h3>Take a guess!</h3>
-        <div ng-repeat="letter in letters | filter:{picked:false}">
-          <button class="btn btn-default letter-button" ng-click ="letter.picked = true">{{letter.value}}</button>
+        <div ng-repeat="letter in letters | filter:{picked:false}" class="alphabet">
+          <button class="btn btn-default letter-button" ng-click ="clickLetter(letter)">{{letter.value}}</button>
         </div>
-
-        <div ng-repeat="blank in blanks">
-          <span class="blank">{{blank}}</span>
+        <div class="divide"></div>
+        <div ng-repeat="blank in blanks track by $index" class="blank">
+           <div ng-show="blank.guessed = false">
+            {{blank.placeholder}}
+          </div>
+          <div ng-hide="blank.guessed = false">
+            {{blank.value}}
+          </div>
         </div>
-        <p>{{word}}</p>
 
       </div>
-
 
     </div>
 
