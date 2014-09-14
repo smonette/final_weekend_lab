@@ -31,7 +31,7 @@ HangmanApp.controller "HangmanCtrl", ["$scope", ($scope) ->
       {value: "z",picked:false }
   ]
 
-  $scope.counter = 0
+  $scope.numGuesses = 0
 
 
 
@@ -46,25 +46,27 @@ HangmanApp.controller "HangmanCtrl", ["$scope", ($scope) ->
 
 
   $scope.clickLetter = (guessedLetter) ->
+    $scope.found = 0;
 
-    $scope.search = (letter) ->
-      for char in $scope.blanks
-        if (letter.value == char.value)
-          char.guessed = true
-          return true;
+    for char in $scope.blanks
+      if (guessedLetter.value == char.value)
+        char.guessed = true
+        console.log("found", char)
+        $scope.found = $scope.found + 1
 
-    if $scope.search(guessedLetter) == true
-      console.log("RIGHT")
+    if $scope.found != 0
+      console.log("RIGHT");
+      $scope.found = 0;
     else
-      $scope.counter = $scope.counter + 1
-      if $scope.counter == 6
+      $scope.numGuesses = $scope.numGuesses + 1
+      if $scope.numGuesses == 6
         $scope.hangman.push(true);
         $scope.loser = true;
-      else if $scope.counter < 6
+      else if $scope.numGuesses < 6
         console.log("WRONG!")
         $scope.hangman.push(true);
 
-    guessedLetter.picked = true
+    guessedLetter.picked = true;
 
 ]
 

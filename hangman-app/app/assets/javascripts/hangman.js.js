@@ -86,7 +86,7 @@ HangmanApp.controller("HangmanCtrl", [
         picked: false
       }
     ];
-    $scope.counter = 0;
+    $scope.numGuesses = 0;
     $scope.handleSubmit = function() {
       var letter, _i, _len, _ref;
       $scope.blanks = [];
@@ -103,25 +103,26 @@ HangmanApp.controller("HangmanCtrl", [
       return $scope.hangman = [true];
     };
     return $scope.clickLetter = function(guessedLetter) {
-      $scope.search = function(letter) {
-        var char, _i, _len, _ref;
-        _ref = $scope.blanks;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          char = _ref[_i];
-          if (letter.value === char.value) {
-            char.guessed = true;
-            return true;
-          }
+      var char, _i, _len, _ref;
+      $scope.found = 0;
+      _ref = $scope.blanks;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        char = _ref[_i];
+        if (guessedLetter.value === char.value) {
+          char.guessed = true;
+          console.log("found", char);
+          $scope.found = $scope.found + 1;
         }
-      };
-      if ($scope.search(guessedLetter) === true) {
+      }
+      if ($scope.found !== 0) {
         console.log("RIGHT");
+        $scope.found = 0;
       } else {
-        $scope.counter = $scope.counter + 1;
-        if ($scope.counter === 6) {
+        $scope.numGuesses = $scope.numGuesses + 1;
+        if ($scope.numGuesses === 6) {
           $scope.hangman.push(true);
           $scope.loser = true;
-        } else if ($scope.counter < 6) {
+        } else if ($scope.numGuesses < 6) {
           console.log("WRONG!");
           $scope.hangman.push(true);
         }
